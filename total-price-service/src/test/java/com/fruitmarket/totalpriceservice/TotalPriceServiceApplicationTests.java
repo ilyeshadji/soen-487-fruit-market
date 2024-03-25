@@ -1,10 +1,10 @@
-package com.fruitmarket.fruit;
+package com.fruitmarket.totalpriceservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FruitApplicationTests {
+class TotalPriceServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
