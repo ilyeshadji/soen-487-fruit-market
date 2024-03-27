@@ -3,6 +3,8 @@ package com.fruitmarket.totalpriceservice.service;
 import com.fruitmarket.totalpriceservice.config.MyConfiguration;
 import com.fruitmarket.totalpriceservice.dto.FruitTotalPriceResponse;
 import com.fruitmarket.totalpriceservice.model.FruitMonthPrice;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,34 +18,37 @@ public class FruitTotalPriceService {
 
     private final MyConfiguration config;
     private final WebClient webClient;
+    private final EurekaClient eurekaClient;
 
-    public FruitTotalPriceResponse getTotalPrice(String fruitName, String monthName, int fruitQuantity) {
+    public FruitTotalPriceResponse getTotalPrice(String fruitName, String monthName, int fruitQuantity) throws Exception {
 
         FruitMonthPrice response;
 
+        // Eureka
+        InstanceInfo service =
+                eurekaClient.getApplication(
+                        "month-price-service").getInstances().get(0);
+
+        String hostName = service.getHostName();
+        int port = service.getPort();
+        String url = String.format("http://%s" +
+                        ":%s/fruit-month-price" +
+                        "/fruit/%s" +
+                        "/month/%s", hostName,
+                port,
+                fruitName, monthName);
+
         try {
             response =
-                    webClient.get().uri("http" +
-                                    "://localhost" +
-                                    ":8000" +
-                                    "/fruit" +
-                                    "-month" +
-                                    "-price" +
-                                    "/fruit" +
-                                    "/" + fruitName +
-                                    "/month" +
-                                    "/" + monthName)
+                    webClient.get().uri(url)
                             .retrieve()
                             .bodyToMono(new ParameterizedTypeReference<FruitMonthPrice>() {
                             })
                             .block();
         } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    "Fruit is not in stock, " +
-                            "please try again " +
-                            "later");
+            throw new Exception(e.getMessage());
         }
-        
+
         assert response != null;
         return new FruitTotalPriceResponse(response.getId(),
                 fruitName, monthName,

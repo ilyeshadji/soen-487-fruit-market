@@ -18,7 +18,7 @@ public class FruitTotalPriceController {
     @ResponseStatus(HttpStatus.OK)
     public FruitTotalPriceResponse getTotalPrice(@PathVariable("fruitName") String fruitName,
                                                  @PathVariable("monthName") String monthName,
-                                                 @PathVariable("fruitQuantity") int fruitQuantity) {
+                                                 @PathVariable("fruitQuantity") int fruitQuantity) throws Exception {
 
         return fruitTotalPriceService.getTotalPrice(fruitName, monthName, fruitQuantity);
     }
