@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/fruit-total-price/fruit")
+@RequestMapping("/fruit")
 @RequiredArgsConstructor
 public class FruitTotalPriceController {
 

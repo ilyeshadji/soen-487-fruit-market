@@ -19,6 +19,7 @@
         <module>fruit-total-price-service</module>
         <module>fruit-month-price-service</module>
         <module>naming-server</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>

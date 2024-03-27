@@ -27,17 +27,16 @@ public class FruitTotalPriceService {
         // Eureka
         InstanceInfo service =
                 eurekaClient.getApplication(
-                        "month-price-service").getInstances().get(0);
+                        "fruit-month-price").getInstances().get(0);
 
         String hostName = service.getHostName();
         int port = service.getPort();
         String url = String.format("http://%s" +
-                        ":%s/fruit-month-price" +
-                        "/fruit/%s" +
+                        ":%s/" + "/fruit/%s" +
                         "/month/%s", hostName,
                 port,
                 fruitName, monthName);
-
+        
         try {
             response =
                     webClient.get().uri(url)
