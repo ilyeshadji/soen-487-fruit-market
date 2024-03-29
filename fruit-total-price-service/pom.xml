@@ -27,11 +27,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--        Eureka-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!--        Service communications-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
@@ -53,6 +55,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!--        Zipkin-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
